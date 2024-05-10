@@ -16,6 +16,8 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         // Do any additional setup after loading the view.
         sampleJournalEntryData.createSampleJournalEntryData()
     }
+    
+    // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sampleJournalEntryData.journalEntries.count
     }
@@ -29,6 +31,14 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         journalCell.titleLabel.text = journalEntry.entryTitle
         
         return journalCell
+    }
+    
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            sampleJournalEntryData.journalEntries.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Methods
