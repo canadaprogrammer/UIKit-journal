@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddJournalEntryViewController: UIViewController {
+class AddJournalEntryViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
 
     // IBOutlet 은 optional value, 내가 입력해주니까 !를 붙여서 사용
     @IBOutlet var titleTextField: UITextField!
@@ -18,6 +18,8 @@ class AddJournalEntryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleTextField.delegate = self
+        bodyTextView.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -36,4 +38,18 @@ class AddJournalEntryViewController: UIViewController {
         newJournalEntry = JournalEntry(rating: rating, title: title, body: body, photo: photo)
     }
 
+    // MARK: - UITextFieldDelegate
+    // 키보드를 내려주는 함수: resignFirstResponder()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: - UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+        }
+        return true
+    }
 }
