@@ -30,8 +30,17 @@ class JournalListViewController: UIViewController, UITableViewDataSource, UITabl
         
         return journalCell
     }
+    
+    // MARK: - Methods
     @IBAction func unwindNewEntryCancel(segue: UIStoryboardSegue) {
         
+    }
+    @IBAction func unwindNewEntrySave(segue: UIStoryboardSegue) {
+        if let sourceViewController = segue.source as? AddJournalEntryViewController, 
+            let newJournalEntry = sourceViewController.newJournalEntry {
+            sampleJournalEntryData.journalEntries.append(newJournalEntry)
+            tableView.reloadData()
+        }
     }
 }
 
